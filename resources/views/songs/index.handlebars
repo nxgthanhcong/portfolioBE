@@ -1,0 +1,35 @@
+<h2>index song</h2>
+<div class="actions">
+    <a href="/songs/create">
+        <button type="button" class="btn btn-primary">+ Create</button>
+    </a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Singer</th>
+            <th scope="col">Auido Slug</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each songs}}
+        <tr>
+            <th scope="row">{{this._id}}</th>
+            <td>{{this.name}}</td>
+            <td>{{this.singer}}</td>
+            <td>{{this.audioSlug}}</td>
+            <td>
+                <a href="/songs/edit/{{this._id}}">
+                    <button type="button" class="btn btn-link">Edit</button>
+                </a>
+                <a href="/songs/delete/{{this._id}}">
+                    <button type="button" class="btn btn-link">Delete</button>
+                </a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
