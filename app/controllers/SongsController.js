@@ -1,7 +1,6 @@
 
 const Song = require("../models/Song");
 const mongooseObjectHandler = require("../../ultis/mongoose");
-const fs = require('fs');
 
 class SongsControler {
     //APIs
@@ -18,13 +17,26 @@ class SongsControler {
     //ACTIONs
     //[get]: /songs
     index(req, res, next) {
-        Song.find()
-            .then((songs) => {
+
+        const songs = Song.find();
+        const deleteSongs = Song.countDeleted();
+
+        Promise.all([songs, deleteSongs])
+            .then(([listSongs, countDelete]) => {
                 res.render("songs/index", {
-                    songs: mongooseObjectHandler.multiple(songs)
+                    listSongs: mongooseObjectHandler.multiple(listSongs),
+                    countDelete
                 });
             })
             .catch(next);
+
+        // Song.find()
+        //     .then((songs) => {
+        //         res.render("songs/index", {
+        //             songs: mongooseObjectHandler.multiple(songs)
+        //         });
+        //     })
+        //     .catch(next);
     }
 
     //[get]: /songs/create
@@ -42,7 +54,11 @@ class SongsControler {
             return next(error)
         }
 
-        const newSong = new Song({ ...req.body });
+        const newSong = new Song({
+            ...req.body,
+            audioSlug: `/uploads/songs/${req.body.audioSlug}.mp3`,
+            image: `https://i3.ytimg.com/vi/${req.body.image}/maxresdefault.jpg`,
+        });
         newSong.save()
             .then(() => res.redirect("/songs"));
     }
@@ -76,6 +92,24 @@ class SongsControler {
 
         Song.delete({ _id: songId })
             .then(() => res.redirect("/songs"))
+            .catch(next);
+    }
+
+    //[get]: /songs/trash
+    trash(req, res, next) {
+        Song.findDeleted()
+            .then((songs) => res.render("songs/trash", {
+                songs: mongooseObjectHandler.multiple(songs)
+            }))
+            .catch(next);
+    }
+
+    //[get]: /songs/restore/:id
+    restore(req, res, next) {
+        const songId = req.params.id;
+
+        Song.restore({ _id: songId })
+            .then(() => res.redirect("back"))
             .catch(next);
     }
 

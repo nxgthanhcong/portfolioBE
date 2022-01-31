@@ -1,0 +1,35 @@
+<h2>Songs trashbin</h2>
+<div class="actions mb-4">
+    <a href="/songs">
+        List songs
+    </a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Singer</th>
+            <th scope="col">Auido Slug</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each songs}}
+        <tr>
+            <th scope="row">{{this._id}}</th>
+            <td>{{this.name}}</td>
+            <td>{{this.singer}}</td>
+            <td>{{this.audioSlug}}</td>
+            <td>
+                <a href="/songs/restore/{{this._id}}">
+                    <button type="button" class="btn btn-link">Restore</button>
+                </a>
+                {{!-- <a href="/songs/delete/{{this._id}}">
+                    <button type="button" class="btn btn-link">Delete</button>
+                </a> --}}
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>

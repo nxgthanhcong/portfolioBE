@@ -14,5 +14,7 @@ router.post('/store', upload.single("audio"), songsController.store);
 router.get('/edit/:id', songsController.edit);
 router.get('/delete/:id', songsController.delete);
 router.post('/update', songsController.update);
+router.get('/trash', songsController.trash);
+router.get('/restore/:id', songsController.restore);
 
 module.exports = router;
