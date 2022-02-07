@@ -1,14 +1,19 @@
 const express = require("express");
-const route = require("./routes");
-const connectDB = require("./configs/db");
 const { engine } = require("express-handlebars");
 const path = require("path");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const dotenv = require("dotenv");
+
+const route = require("./routes");
+const connectDB = require("./configs/db");
 const SortMiddleware = require("./app/middlewares/SortMiddleware");
 const PagingMiddleware = require("./app/middlewares/PagingMiddleware");
 // const swaggerUi = require('swagger-ui-express');
 // const swaggerDocument = require('./swagger.json');
+
+//init dotenv
+dotenv.config();
 
 //create app instance
 const app = express();
@@ -54,6 +59,6 @@ app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, "resources", "views"));
 
 //app run
-app.listen(3001, () => {
-    console.log("App run at 3001");
+app.listen(process.env.PORT || 5000, () => {
+    console.log("App start");
 })

@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
-const connectionStr = "mongodb+srv://nxgthanhcongcommunity:7d42nVDzIuGjatIL@cluster0.5ratn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const dotenv = require("dotenv");
+
+dotenv.config();
+
+const connectionStr = process.env.DATABASE_URL;
 
 async function connectDB() {
     try {
