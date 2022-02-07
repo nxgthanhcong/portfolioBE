@@ -1,0 +1,19 @@
+<form method="POST" action="/socials/update">
+    <div class="form-group">
+        <input name="_id" value="{{_id}}" type="hidden" class="form-control" id="_id">
+    </div>
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input name="title" value="{{title}}" type="text" class="form-control" id="title"
+            placeholder="Enter the social title">
+    </div>
+    <div class="form-group">
+        <label for="icon">Icon</label>
+        <input name="icon" value="{{icon}}" type="text" class="form-control" id="icon" placeholder="Enter icon">
+    </div>
+    <div class="form-group">
+        <label for="color">Icon color</label>
+        <input name="color" value="{{color}}" type="color" class="form-control" id="color" placeholder="Enter color">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

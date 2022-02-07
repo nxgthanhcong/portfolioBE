@@ -5,7 +5,9 @@ const { engine } = require("express-handlebars");
 const path = require("path");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const swaggerUi = require('swagger-ui-express');
+const SortMiddleware = require("./app/middlewares/SortMiddleware");
+const PagingMiddleware = require("./app/middlewares/PagingMiddleware");
+// const swaggerUi = require('swagger-ui-express');
 // const swaggerDocument = require('./swagger.json');
 
 //create app instance
@@ -29,8 +31,12 @@ connectDB();
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-
 app.use(express.json());
+
+//sort middleware
+app.use(SortMiddleware);
+//paging middleware
+app.use(PagingMiddleware);
 
 //static middleware
 app.use(express.static('public'))
@@ -41,10 +47,8 @@ route(app);
 
 //view engine configs
 app.engine('handlebars', engine({
-    extname: "hdb",
-    helpers: {
-
-    }
+    extname: ".hdb",
+    helpers: require("./ultis/handlebars"),
 }));
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, "resources", "views"));

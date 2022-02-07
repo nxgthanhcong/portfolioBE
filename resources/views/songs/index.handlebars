@@ -1,20 +1,36 @@
-<h2>index song</h2>
-<div class="actions mb-4">
-    <a href="/songs/create">
-        <button type="button" class="btn btn-primary">+ Create</button>
-    </a>
-    <a href="/songs/trash" class="ml-4">
-        Trashbinc
-        <span class="oi oi-trash"></span>
-        ({{countDelete}})
-    </a>
+<h2 class="mt-4 mb-4">Songs Space</h2>
+
+<div class="d-flex justify-content-between mt-2 mb-2">
+    <div class="actions mb-2">
+        <a href="/songs/create">
+            <button type="button" class="btn btn-primary">+ Create</button>
+        </a>
+        <a href="/songs/trash" class="ml-4">
+            Trashbin
+            <span class="oi oi-trash"></span>
+            ({{countDelete}})
+        </a>
+    </div>
+
+    <form class="search-form form-inline mb-2">
+        <input name="searchText" class="search-text form-control mr-sm-2" type="search" placeholder="Search"
+            aria-label="Search">
+        <button class="search-form-submit-btn btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
 </div>
+
 <table class="table">
     <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Singer</th>
+            <th scope="col">Image</th>
+            <th scope="col">
+                Name
+                {{!-- {{{sortable "name" _sort}}} --}}
+            </th>
+            <th scope="col">
+                Singer
+            </th>
             <th scope="col">Auido Slug</th>
             <th scope="col">Action</th>
         </tr>
@@ -23,6 +39,9 @@
         {{#each listSongs}}
         <tr>
             <th scope="row">{{this._id}}</th>
+            <td>
+                <img src="{{this.image}}" alt="" style="width: 100px;">
+            </td>
             <td>{{this.name}}</td>
             <td>{{this.singer}}</td>
             <td>{{this.audioSlug}}</td>
@@ -30,9 +49,6 @@
                 <a href="/songs/edit/{{this._id}}">
                     <button type="button" class="btn btn-link">Edit</button>
                 </a>
-                {{!-- <a href="/songs/delete/{{this._id}}">
-
-                </a> --}}
                 <button type="button" class="btn btn-link" data-toggle="modal" data-target="#deleteSong"
                     data-id="{{this._id}}">Delete</button>
             </td>
@@ -40,6 +56,9 @@
         {{/each}}
     </tbody>
 </table>
+
+{{!-- paging(pageNumbers, pageSize, currentPage) --}}
+{{{paging pageCount 3 _currentPage}}}
 
 <!-- Modal -->
 <div class="modal fade" id="deleteSong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -77,7 +96,6 @@
         document.getElementById("deleteButton").onclick = function () {
             var eForm = document.getElementById("deleteForm");
             eForm.action = `songs/delete/${courseId}`;
-            //eForm.method = "GET";
             eForm.submit();
         }
     })

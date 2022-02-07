@@ -1,0 +1,21 @@
+<form method="POST" action="store" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input name="email" type="text" class="form-control" id="email" placeholder="Enter the email">
+    </div>
+    <div class="form-group">
+        <label for="singer">Singer</label>
+        <input name="singer" type="text" class="form-control" id="singer" placeholder="Enter Singer name">
+    </div>
+    <div class="form-group">
+        <label for="image">Image URL</label>
+        <input name="image" type="text" class="form-control" id="image" placeholder="Enter image url">
+    </div>
+    <div class="form-group">
+        <label for="audio">Upload audio</label>
+        <input name="audio" type="file" class="form-control-file" id="audio">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{{!-- enctype="multipart/form-data" --}}

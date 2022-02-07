@@ -18,25 +18,29 @@ class SongsControler {
     //[get]: /songs
     index(req, res, next) {
 
-        const songs = Song.find();
-        const deleteSongs = Song.countDeleted();
+        const listSongs = Song
+            .find()
+            // .sortable(req)
+            .paging(req)
+            .searching(req)
 
-        Promise.all([songs, deleteSongs])
-            .then(([listSongs, countDelete]) => {
+        const countDeleteSongs = Song.countDeleted();
+        const countTotalSongs = Song.count();
+
+        const size = req.query._size || 1;
+
+        Promise.all([listSongs, countDeleteSongs, countTotalSongs])
+            .then(([listSongs, countDelete, totalSongs]) => {
+
                 res.render("songs/index", {
                     listSongs: mongooseObjectHandler.multiple(listSongs),
-                    countDelete
+                    countDelete,
+                    pageCount: req.query.hasOwnProperty("searchText")
+                        ? 1
+                        : Math.ceil(totalSongs / size),
                 });
             })
             .catch(next);
-
-        // Song.find()
-        //     .then((songs) => {
-        //         res.render("songs/index", {
-        //             songs: mongooseObjectHandler.multiple(songs)
-        //         });
-        //     })
-        //     .catch(next);
     }
 
     //[get]: /songs/create

@@ -1,0 +1,27 @@
+<form method="POST" action="/songs/update">
+    <div class="form-group">
+        <input name="_id" value="{{_id}}" type="hidden" class="form-control" id="_id">
+    </div>
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input name="name" value="{{name}}" type="text" class="form-control" id="name"
+            placeholder="Enter the song name">
+    </div>
+    <div class="form-group">
+        <label for="singer">Singer</label>
+        <input name="singer" value="{{singer}}" type="text" class="form-control" id="singer"
+            placeholder="Enter Singer name">
+    </div>
+    <div class="form-group">
+        <label for="image">Image URL</label>
+        <input name="image" value="{{image}}" type="text" class="form-control" id="image" placeholder="Enter image url">
+    </div>
+    {{!-- <div class="form-group">
+        <label for="audio">Upload audio</label>
+        <input name="audio" value="{{" /uploads/song/" + {audio} +".mp3"}}" type="file" class="form-control-file"
+            id="audio">
+    </div> --}}
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{{!-- enctype="multipart/form-data" --}}
